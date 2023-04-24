@@ -21,6 +21,7 @@ repositories {
 	mavenCentral()
 }
 
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -78,6 +79,8 @@ openApiGenerate {
 compileJava.dependsOn tasks.openApiGenerate
 
 sourceSets.main.java.srcDirs = ['build/generated/src/main/java','src/main/java']
+
+
 
 bootRun {
 	jvmArgs=["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]

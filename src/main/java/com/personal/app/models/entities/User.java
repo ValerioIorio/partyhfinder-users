@@ -64,29 +64,17 @@ public class User {
     private LocalDateTime lastFailedLogin;
 
 
-
-
-/*
-    @Column(name = "matched_users_ids")
-    @Lob
-    private String matchedUsersIds; // comma separated ids of matched users
-    @Transient*/
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "user_friend_user_relationships",
+            name = "pf_user_friend_user_relationships",
             joinColumns = @JoinColumn(name = "this_user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_user_id")
+            inverseJoinColumns = @JoinColumn(name = "friend_with_this_user_id")
     )
     private List<User> matchedUsers;
 
-
-
-
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "users_chats_relationships",
+            name = "pf_users_chats_relationships",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id")
     )

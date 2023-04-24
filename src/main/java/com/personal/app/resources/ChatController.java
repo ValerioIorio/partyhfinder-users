@@ -39,5 +39,11 @@ public class ChatController implements ChatApi{
         return ResponseEntity.ok(chatService.updateChat(chatDTO));
     }
 
+    @Override
+    public ResponseEntity<Void> checkChat(Long id) {
+        this.chatService.checkChat(id);
+        return ResponseEntity.ok().build();
+    }
+
     private final ChatService chatService;
 }

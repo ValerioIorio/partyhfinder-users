@@ -7,12 +7,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
+import java.util.List;
+
 @Component
 public class ChatValidator extends AbstractValidator<ChatDTO> {
     @Override
     public void validate(ChatDTO input, HttpMethod method, LinkedHashMap<String, Boolean> object_presence) {
         LinkedHashMap<String, String> errors = new LinkedHashMap<>();
-        errors.putAll(validateMandatoryFields(errors, input.getName()));
+        errors.putAll(validateMandatoryFields(errors, List.of("name"), input.getName()));
         errors.putAll(validatePresenceOfOptionalObject(object_presence, errors));
         throwExceptionIfNecessary(errors);
     }
@@ -20,7 +22,7 @@ public class ChatValidator extends AbstractValidator<ChatDTO> {
     @Override
     public void validate(ChatDTO input, HttpMethod method) {
         LinkedHashMap<String, String> errors = new LinkedHashMap<>();
-        errors.putAll(validateMandatoryFields(errors, input.getName()));
+        errors.putAll(validateMandatoryFields(errors, List.of("name"),  input.getName()));
         throwExceptionIfNecessary(errors);
     }
 }

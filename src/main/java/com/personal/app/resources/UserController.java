@@ -39,5 +39,11 @@ public class UserController implements UsersApi{
         return ResponseEntity.ok(this.userService.findAllUsers(new UserFilter(pageSize, numberOfPage, descending, sortBy, username)));
     }
 
+    @Override
+    public ResponseEntity<Void> checkUser(Long id) {
+        this.userService.checkUser(id);
+        return ResponseEntity.ok().build();
+    }
+
     private final UserService userService;
 }

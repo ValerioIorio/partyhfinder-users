@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "chats")
+@Table(name = "pf_chats")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,7 +33,7 @@ public class Chat {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "users_chats_relationships",
+            name = "pf_users_chats_relationships",
             joinColumns = @JoinColumn(name = "chat_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
@@ -45,8 +45,5 @@ public class Chat {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "chat_id")
-    private List<Missive> missives = new ArrayList<>();
 
 }

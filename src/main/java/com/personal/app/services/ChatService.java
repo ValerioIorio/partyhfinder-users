@@ -14,4 +14,6 @@ public interface ChatService {
     void deleteChat(Long id);
 
     ChatDTO addChat(ChatDTO chatDTO);
+
+    void checkChat(Long id);
 }

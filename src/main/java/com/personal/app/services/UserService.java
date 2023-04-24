@@ -14,4 +14,6 @@ public interface UserService {
     UserDTO getUser(Long id);
 
     UserPageDTO findAllUsers(UserFilter userFilter);
+
+    void checkUser(Long id);
 }

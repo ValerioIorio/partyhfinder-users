@@ -3,10 +3,7 @@ package com.personal.app.services.impl;
 import com.partyh.finder.common.exception.impl.PFNotFoundException;
 import com.partyh.finder.common.utils.FilterUtil;
 import com.partyh.finder.common.validators.commons.ValidationUtils;
-import com.personal.app.model.MissiveDTO;
-import com.personal.app.model.MissivePageDTO;
 import com.personal.app.models.costants.UserConstants;
-import com.personal.app.models.entities.Missive;
 import com.personal.app.models.entities.User;
 import com.personal.app.model.UserDTO;
 import com.personal.app.model.UserPageDTO;
@@ -44,7 +41,6 @@ public class UserServiceImpl implements UserService {
         user.setCreatedAt(LocalDateTime.now());
         user.setLastLogin(LocalDateTime.now());
         user.setChats(null);
-        user.setMatchedUsers(null);
         return mapper.map(userRepository.save(user), UserDTO.class);
     }
 
@@ -57,7 +53,7 @@ public class UserServiceImpl implements UserService {
         //validate dto
         userValidator.validate(userDTO, HttpMethod.PUT, new LinkedHashMap<>(Map.of("user", optionalUser.isPresent())));
 
-        //get the previous user and the new user
+        //get the previous user and create the new user
         User previousUser = optionalUser.get();
         User user = mapper.map(userDTO, User.class);
 
@@ -75,6 +71,7 @@ public class UserServiceImpl implements UserService {
         user.setLastLogout(previousUser.getLastLogout());
         user.setLastFailedLogin(previousUser.getLastFailedLogin());
         user.setStatus(previousUser.getStatus());
+        user.setMatchedUsers(previousUser.getMatchedUsers());
         return mapper.map(userRepository.save(user), UserDTO.class);
     }
 
@@ -125,6 +122,13 @@ public class UserServiceImpl implements UserService {
         pageDTO.setCurrentPage(userPage.getNumber());
         pageDTO.setTotalPages(userPage.getTotalPages());
         return pageDTO;
+    }
+
+    @Override
+    public void checkUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new PFNotFoundException("User not found");
+        }
     }
 
     @Value("${user.default.sort.by}")
